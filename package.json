@@ -1,0 +1,30 @@
+{
+  "name": "actual-goals",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "dev": "concurrently -c cyan,magenta npm:dev:*",
+    "dev:api": "node --watch --env-file=.env ./src/index.js",
+    "dev:web": "web-dev-server"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.12",
+    "@web/dev-server": "^0.4.6",
+    "concurrently": "^9.1.2",
+    "prettier": "^3.4.2",
+    "typescript": "^5.7.3"
+  },
+  "dependencies": {
+    "@types/express": "^5.0.0",
+    "better-sqlite3": "^11.7.2",
+    "body-parser": "^1.20.3",
+    "bulma": "^1.0.3",
+    "express": "^4.21.2",
+    "lit": "^3.2.1",
+    "yup": "^1.6.1"
+  }
+}
