@@ -1,15 +1,15 @@
 import { Router } from 'express';
-import { object, string } from 'yup';
-import { GoalRepository } from './GoalRepository.js';
-import { GoalModel } from './GoalModel.js';
+import { z } from 'zod';
+import { GoalRepository } from './GoalRepository.ts';
+import { GoalModel } from './GoalModel.ts';
 
-const createGoalBody = object({
-  name: string().required(),
-}).strict();
+const CreateGoalBody = z.object({
+  name: z.string(),
+});
 
-const updateGoalBody = object({
-  name: string().optional(),
-}).strict();
+const UpdateGoalBody = z.object({
+  name: z.string(),
+});
 
 const goalRepository = new GoalRepository();
 
@@ -20,7 +20,7 @@ controller.get('/goals', (_, res) => {
 });
 
 controller.post('/goals', async (req, res) => {
-  const body = await createGoalBody.validate(req.body);
+  const body = CreateGoalBody.parse(req.body);
   const goal = new GoalModel();
   goal.name = body.name;
   goalRepository.save(goal);
@@ -29,12 +29,16 @@ controller.post('/goals', async (req, res) => {
 });
 
 controller.put('/goals/:id', async (req, res) => {
-  const body = await updateGoalBody.validate(req.body);
+  const body = UpdateGoalBody.parse(req.body);
   const goal = goalRepository.get(Number.parseInt(req.params.id));
-  goal.name = body.name;
-  goalRepository.save(goal);
+  if (!goal) {
+    res.status(404).end();
+  } else {
+    goal.name = body.name;
+    goalRepository.save(goal);
 
-  res.status(200).send(goal.json());
+    res.status(200).send(goal.json());
+  }
 });
 
 controller.delete('/goals/:id', async (req, res) => {

@@ -1,9 +1,8 @@
 import express from 'express';
-import { Config } from './Config.js';
-import { controller as goalController } from './goalController.js';
+import { Config } from './Config.ts';
+import { controller as goalController } from './goalController.ts';
 import bodyParser from 'body-parser';
 import api from '@actual-app/api';
-import { GoalRepository } from './GoalRepository.js';
 
 const config = new Config();
 config.loadFromEnv();
@@ -15,11 +14,6 @@ await api.init({
 
 const app = express();
 app.use(bodyParser.json());
-
-app.locals = {
-  config,
-  goalRepository: new GoalRepository(),
-};
 
 app.use(goalController);
 

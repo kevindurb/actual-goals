@@ -1,6 +1,5 @@
 export class GoalModel {
-  /** @type {number | undefined} */
-  id;
+  id: number | undefined;
   name = '';
 
   json() {

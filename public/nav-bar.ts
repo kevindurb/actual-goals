@@ -1,8 +1,10 @@
 import { LitElement, css, html } from 'lit';
 import * as styles from './styles.js';
+import { customElement } from 'lit/decorators.js';
 
-class NavBar extends LitElement {
-  static styles = [
+@customElement('nav-bar')
+export class NavBar extends LitElement {
+  static override styles = [
     styles.links,
     styles.boxSizing,
     css`
@@ -17,7 +19,7 @@ class NavBar extends LitElement {
     `,
   ];
 
-  render() {
+  override render() {
     return html`
       <nav>
         <a href="/">Actual Goals</a>
@@ -25,5 +27,3 @@ class NavBar extends LitElement {
     `;
   }
 }
-
-customElements.define('nav-bar', NavBar);

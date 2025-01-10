@@ -1,13 +1,25 @@
 {
   "compilerOptions": {
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
-    "skipLibCheck": true,
+    "allowImportingTsExtensions": true,
     "allowJs": true,
     "checkJs": true,
     "declaration": true,
+    "declarationMap": true,
     "emitDeclarationOnly": true,
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "module": "NodeNext",
+    "moduleDetection": "force",
+    "moduleResolution": "NodeNext",
+    "noEmit": true,
+    "noImplicitOverride": true,
+    "noUncheckedIndexedAccess": true,
     "outDir": "dist",
-    "declarationMap": true
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "target": "es2022",
+    "verbatimModuleSyntax": true,
+    "experimentalDecorators": true
   }
 }

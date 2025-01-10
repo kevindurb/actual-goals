@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "concurrently -c cyan,magenta npm:dev:*",
-    "dev:api": "node --watch --env-file=.env ./src/index.js",
+    "dev:api": "node --experimental-strip-types --experimental-transform-types --watch --env-file=.env ./src/index.ts",
     "dev:web": "web-dev-server"
   },
   "keywords": [],
@@ -14,6 +14,7 @@
   "devDependencies": {
     "@types/better-sqlite3": "^7.6.12",
     "@web/dev-server": "^0.4.6",
+    "@web/dev-server-esbuild": "^1.0.3",
     "concurrently": "^9.1.2",
     "prettier": "^3.4.2",
     "typescript": "^5.7.3"
@@ -25,6 +26,6 @@
     "bulma": "^1.0.3",
     "express": "^4.21.2",
     "lit": "^3.2.1",
-    "yup": "^1.6.1"
+    "zod": "^3.24.1"
   }
 }

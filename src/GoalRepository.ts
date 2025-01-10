@@ -1,33 +1,34 @@
-import { db } from './db.js';
-import { GoalModel } from './GoalModel.js';
-import { SQL } from './SQL.js';
+import { db } from './db.ts';
+import { GoalModel } from './GoalModel.ts';
+import { SQL } from './SQL.ts';
+
+interface GoalRow {
+  id: number;
+  name: string;
+}
 
 export class GoalRepository {
-  /**
-   * @param {any} row
-   */
-  #modelFromRow(row) {
+  #modelFromRow(row: GoalRow) {
     const goal = new GoalModel();
     goal.id = row.id;
     goal.name = row.name;
     return goal;
   }
 
-  /**
-   * @param {number} id
-   */
-  get(id) {
-    const row = SQL`
+  get(id: number) {
+    const row = SQL<GoalRow, [number]>`
       SELECT id, name
       FROM goals
       WHERE id = ${id}
     `.get(db);
 
+    if (!row) return;
+
     return this.#modelFromRow(row);
   }
 
-  getAll() {
-    return SQL`
+  getAll(): GoalModel[] {
+    return SQL<GoalRow, []>`
       SELECT id, name
       FROM goals
     `
@@ -35,10 +36,7 @@ export class GoalRepository {
       .map(this.#modelFromRow);
   }
 
-  /**
-   * @param {GoalModel} goal
-   */
-  save(goal) {
+  save(goal: GoalModel) {
     if (goal.id) {
       SQL`
         UPDATE goals
@@ -57,10 +55,7 @@ export class GoalRepository {
     return goal;
   }
 
-  /**
-   * @param {number} id
-   */
-  delete(id) {
+  delete(id: number) {
     SQL`
       DELETE FROM goals
       WHERE id = ${id}
