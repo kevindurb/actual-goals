@@ -1,6 +1,6 @@
 import express from 'express';
 import { Config } from './Config.ts';
-import { GoalController } from './Controller.ts';
+import { GoalController } from './GoalController.ts';
 import bodyParser from 'body-parser';
 import api from '@actual-app/api';
 import { Goal } from './Goal.ts';
