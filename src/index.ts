@@ -19,7 +19,7 @@ await api.init({
 const app = express();
 app.use(bodyParser.json());
 
-app.use(GoalController);
+app.use('/api/goals', GoalController);
 
 app.listen(config.port, () =>
   console.log(`API Listening at http://localhost:${config.port}`),
