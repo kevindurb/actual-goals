@@ -1,3 +1,3 @@
-import sqlite from 'better-sqlite3';
+import { Sequelize } from 'sequelize';
 
-export const db = sqlite('./database.sqlite');
+export const db = new Sequelize('sqlite:./database.sqlite');

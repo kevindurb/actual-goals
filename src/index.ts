@@ -3,9 +3,13 @@ import { Config } from './Config.ts';
 import { controller as goalController } from './goalController.ts';
 import bodyParser from 'body-parser';
 import api from '@actual-app/api';
+import { Goal } from './Goal.ts';
 
 const config = new Config();
 config.loadFromEnv();
+
+await Goal.sync({ alter: true });
+
 await api.init({
   dataDir: '.cache/actual-budget/',
   serverURL: config.actualBudgetServerUrl,
