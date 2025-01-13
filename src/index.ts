@@ -1,6 +1,6 @@
 import express from 'express';
 import { Config } from './Config.ts';
-import { controller as goalController } from './goalController.ts';
+import { GoalController } from './Controller.ts';
 import bodyParser from 'body-parser';
 import api from '@actual-app/api';
 import { Goal } from './Goal.ts';
@@ -19,7 +19,7 @@ await api.init({
 const app = express();
 app.use(bodyParser.json());
 
-app.use(goalController);
+app.use(GoalController);
 
 app.listen(config.port, () =>
   console.log(`API Listening at http://localhost:${config.port}`),

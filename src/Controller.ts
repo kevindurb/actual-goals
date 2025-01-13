@@ -10,20 +10,29 @@ const UpdateGoalBody = z.object({
   name: z.string(),
 });
 
-export const controller = Router();
+const router = Router();
 
-controller.get('/goals', async (_, res) => {
+router.get('/goals', async (_, res) => {
   const goals = await Goal.findAll();
   res.status(200).send(goals.map((goal) => goal.toJSON()));
 });
 
-controller.post('/goals', async (req, res) => {
+router.post('/goals', async (req, res) => {
   const body = CreateGoalBody.parse(req.body);
   const goal = await Goal.create(body);
   res.status(201).send(goal.toJSON());
 });
 
-controller.put('/goals/:id', async (req, res) => {
+router.get('/goals/:id', async (req, res) => {
+  const goal = await Goal.findByPk(Number.parseInt(req.params.id));
+  if (!goal) {
+    res.status(404).end();
+  } else {
+    res.status(200).send(goal.toJSON());
+  }
+});
+
+router.put('/goals/:id', async (req, res) => {
   const body = UpdateGoalBody.parse(req.body);
   const goal = await Goal.findByPk(Number.parseInt(req.params.id));
   if (!goal) {
@@ -35,7 +44,7 @@ controller.put('/goals/:id', async (req, res) => {
   }
 });
 
-controller.delete('/goals/:id', async (req, res) => {
+router.delete('/goals/:id', async (req, res) => {
   const goal = await Goal.findByPk(Number.parseInt(req.params.id));
   if (!goal) {
     res.status(404).end();
@@ -44,3 +53,5 @@ controller.delete('/goals/:id', async (req, res) => {
     res.status(200).end();
   }
 });
+
+export { router as GoalController };
