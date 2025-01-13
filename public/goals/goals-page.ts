@@ -1,43 +1,42 @@
 import { html, LitElement } from 'lit';
 import { customElement } from 'lit/decorators.js';
-import { createRef, ref } from 'lit/directives/ref.js';
-import type { NewGoalModal } from './new-goal-modal.ts';
 import { Task } from '@lit/task';
-
-interface Goal {
-  id: number;
-  name: string;
-}
+import type { Goal } from '../../src/GoalModel.ts';
 
 @customElement('goals-page')
 export class GoalsPage extends LitElement {
-  #newGoalModal = createRef<NewGoalModal>();
-  #goalsTask = new Task<[], Goal[]>(this, {
-    task: async () => fetch('/api/goals').then((res) => res.json()),
-    args: () => [],
+  #goalsTask = new Task<[unknown], Goal[]>(this, {
+    task: () => fetch('/api/goals').then((res) => res.json()),
+    args: () => [this.#deleteGoal.value],
+  });
+
+  #deleteGoal = new Task<[number]>(this, {
+    task: ([id]) => fetch(`/api/goals/${id}`, { method: 'DELETE' }),
   });
 
   #renderGoalList(goals: Goal[]) {
-    return html`
-      <table>
-        <tbody>
-          ${goals.map(
-            (goal) => html`
-              <tr>
-                <th>${goal.name}</th>
-              </tr>
-            `,
-          )}
-        </tbody>
-      </table>
-    `;
+    return goals.map(
+      (goal) => html`
+        <h3>
+          ${goal.name}
+          <button @click=${() => this.#deleteGoal.run([goal.id])}>
+            Delete
+          </button>
+        </h3>
+        <progress min="0" max="100" value=${Math.random() * 100} />
+      `,
+    );
   }
 
   override render() {
     return html`
       <h1>
         Goals
-        <button @click=${() => (window.location.href = '/goals/new')}>
+        <button
+          @click=${() => {
+            window.location.href = '/goals/new';
+          }}
+        >
           Add Goal
         </button>
       </h1>

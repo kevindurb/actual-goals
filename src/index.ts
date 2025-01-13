@@ -3,12 +3,12 @@ import { Config } from './Config.ts';
 import { GoalController } from './GoalController.ts';
 import bodyParser from 'body-parser';
 import api from '@actual-app/api';
-import { Goal } from './Goal.ts';
+import { GoalModel } from './GoalModel.ts';
 
 const config = new Config();
 config.loadFromEnv();
 
-await Goal.sync({ alter: true });
+await GoalModel.sync({ alter: true });
 
 await api.init({
   dataDir: '.cache/actual-budget/',
