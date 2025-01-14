@@ -2,14 +2,14 @@ import { Router } from 'express';
 import { z } from 'zod';
 import { GoalModel } from './GoalModel.ts';
 
-const CreateGoalBody = z
+export const CreateGoalBody = z
   .object({
     name: z.string(),
     type: z.enum(['MONTHLY', 'ONE_TIME']),
   })
   .strict();
 
-const UpdateGoalBody = CreateGoalBody.partial();
+export const UpdateGoalBody = CreateGoalBody.partial();
 
 const router = Router();
 

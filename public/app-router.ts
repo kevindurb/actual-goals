@@ -17,6 +17,11 @@ export class AppRouter extends LitElement {
       render: () => html`<goals-page></goals-page>`,
       enter: () => !!import('./goals/goals-page.ts'),
     },
+    {
+      path: '/goals/new',
+      render: () => html`<new-goal-page></new-goal-page>`,
+      enter: () => !!import('./goals/new-goal-page.ts'),
+    },
   ]);
 
   override render() {

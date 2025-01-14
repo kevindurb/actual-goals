@@ -17,32 +17,30 @@ export class GoalsPage extends LitElement {
   #renderGoalList(goals: Goal[]) {
     return goals.map(
       (goal) => html`
-        <h3>
+        <md-list-item>
           ${goal.name}
-          <button @click=${() => this.#deleteGoal.run([goal.id])}>
-            Delete
-          </button>
-        </h3>
-        <progress min="0" max="100" value=${Math.random() * 100} />
+          <md-icon @click=${() => this.#deleteGoal.run([goal.id])} slot="end"
+            >open_in_new</md-icon
+          >
+        </md-list-item>
       `,
     );
   }
 
   override render() {
     return html`
-      <h1>
-        Goals
-        <button
-          @click=${() => {
-            window.location.href = '/goals/new';
-          }}
-        >
-          Add Goal
-        </button>
-      </h1>
-      ${this.#goalsTask.render({
-        complete: (goals) => this.#renderGoalList(goals),
-      })}
+      <h1>Goals</h1>
+      <md-list>
+        ${this.#goalsTask.render({
+          complete: (goals) => this.#renderGoalList(goals),
+        })}
+      </md-list>
+      <md-fab
+        @click=${() => {
+          window.location.href = '/goals/new';
+        }}
+        ><md-icon slot="icon">add</md-icon></md-fab
+      >
     `;
   }
 }
