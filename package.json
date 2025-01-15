@@ -7,7 +7,7 @@
     "dev": "concurrently -c cyan,magenta npm:dev:*",
     "dev:api": "node --experimental-strip-types --experimental-transform-types --watch --env-file=.env ./src/index.ts",
     "dev:web": "web-dev-server",
-    "check": "tsc"
+    "check": "tsc && lit-analyzer public"
   },
   "keywords": [],
   "author": "",
@@ -17,6 +17,7 @@
     "@web/dev-server-esbuild": "^1.0.3",
     "concurrently": "^9.1.2",
     "koa-proxies": "^0.12.4",
+    "lit-analyzer": "^2.0.3",
     "prettier": "^3.4.2",
     "typescript": "^5.7.3"
   },

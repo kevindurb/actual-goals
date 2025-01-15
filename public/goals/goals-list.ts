@@ -1,8 +1,6 @@
 import { css, html, LitElement } from 'lit';
 import { customElement } from 'lit/decorators.js';
 import { Router } from '@lit-labs/router';
-import { styles as typescaleStyles } from '@material/web/typography/md-typescale-styles.js';
-import { unwrap } from '../utils/unwrap.ts';
 import { GoalsController, type Goal } from './goals-controller.ts';
 import { consume } from '@lit/context';
 import { routerContext } from '../router-context.ts';
@@ -10,12 +8,7 @@ import { routerContext } from '../router-context.ts';
 @customElement('goals-list')
 export class GoalsList extends LitElement {
   static override styles = [
-    unwrap(typescaleStyles.styleSheet),
     css`
-      h1 {
-        text-align: center;
-      }
-
       md-fab {
         position: fixed;
         bottom: var(--md-sys-spacing-md);
@@ -50,7 +43,7 @@ export class GoalsList extends LitElement {
 
   override render() {
     return html`
-      <h1 class="md-typescale-display-large">Goals</h1>
+      <ag-header center>Goals</ag-header>
       <md-list>
         ${this.controller.listTask.render({
           complete: (goals) => this.renderGoalList(goals),

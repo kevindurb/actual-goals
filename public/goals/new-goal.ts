@@ -1,8 +1,6 @@
 import { css, html, LitElement } from 'lit';
 import { customElement, query } from 'lit/decorators.js';
-import { styles as typescaleStyles } from '@material/web/typography/md-typescale-styles.js';
 import type { MdFilledSelect, MdFilledTextField } from '@material/web/all.js';
-import { unwrap } from '../utils/unwrap.ts';
 import {
   GoalsController,
   type CreateGoalBodyType,
@@ -10,17 +8,11 @@ import {
 import { consume } from '@lit/context';
 import { routerContext } from '../router-context.ts';
 import type { Router } from '@lit-labs/router';
-import { TaskStatus } from '@lit/task';
 
 @customElement('new-goal')
 export class NewGoal extends LitElement {
   static override styles = [
-    unwrap(typescaleStyles.styleSheet),
     css`
-      h1 {
-        text-align: center;
-      }
-
       md-fab {
         position: fixed;
         bottom: var(--md-sys-spacing-md);
@@ -77,7 +69,7 @@ export class NewGoal extends LitElement {
 
   override render() {
     return html`
-      <h1 class="md-typescale-display-large">Create a new Goal!</h1>
+      <ag-header center>Create a new Goal!</ag-header>
       <form @submit=${this.createGoal}>
         <md-filled-text-field
           id="name"
@@ -100,7 +92,6 @@ export class NewGoal extends LitElement {
           id="end"
           label="End"
           type="date"
-          required
         ></md-filled-text-field>
         <md-fab label="Save" @click=${this.submitForm}>
           <md-icon slot="icon">save</md-icon>
