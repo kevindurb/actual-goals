@@ -7,6 +7,7 @@ import type { Goal } from '../../src/GoalModel.ts';
 @customElement('goals-page')
 export class GoalsPage extends LitElement {
   static override styles = [typescaleStyles.styleSheet!];
+
   #goalsTask = new Task<[unknown], Goal[]>(this, {
     task: () => fetch('/api/goals').then((res) => res.json()),
     args: () => [this.#deleteGoal.value],
