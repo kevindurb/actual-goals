@@ -1,31 +1,36 @@
-import { html, LitElement } from 'lit';
+import { css, html, LitElement } from 'lit';
 import { customElement } from 'lit/decorators.js';
 import { Task } from '@lit/task';
 import { styles as typescaleStyles } from '@material/web/typography/md-typescale-styles.js';
 import type { Goal } from '../../src/GoalModel.ts';
+import { unwrap } from '../utils/unwrap.ts';
 
 @customElement('goals-page')
 export class GoalsPage extends LitElement {
-  static override styles = [typescaleStyles.styleSheet!];
+  static override styles = [
+    unwrap(typescaleStyles.styleSheet),
+    css`
+      h1 {
+        text-align: center;
+      }
 
-  #goalsTask = new Task<[unknown], Goal[]>(this, {
+      md-fab {
+        position: fixed;
+        bottom: 16px;
+        right: 16px;
+      }
+    `,
+  ];
+
+  #goalsTask = new Task<[], Goal[]>(this, {
     task: () => fetch('/api/goals').then((res) => res.json()),
-    args: () => [this.#deleteGoal.value],
-  });
-
-  #deleteGoal = new Task<[number]>(this, {
-    task: ([id]) => fetch(`/api/goals/${id}`, { method: 'DELETE' }),
+    args: () => [],
   });
 
   #renderGoalList(goals: Goal[]) {
     return goals.map(
       (goal) => html`
-        <md-list-item>
-          ${goal.name}
-          <md-icon @click=${() => this.#deleteGoal.run([goal.id])} slot="end"
-            >open_in_new</md-icon
-          >
-        </md-list-item>
+        <md-list-item href=${`/goals/${goal.id}`}>${goal.name}</md-list-item>
       `,
     );
   }

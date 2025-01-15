@@ -1,16 +1,24 @@
 import { Task } from '@lit/task';
-import { html, LitElement } from 'lit';
+import { css, html, LitElement } from 'lit';
 import { customElement, query } from 'lit/decorators.js';
 import { styles as typescaleStyles } from '@material/web/typography/md-typescale-styles.js';
 import type { CreateGoalBody } from '../../src/GoalController.ts';
 import type { z } from 'zod';
 import type { MdFilledTextField } from '@material/web/all.js';
+import { unwrap } from '../utils/unwrap.ts';
 
 type CreateGoalBodyType = z.infer<typeof CreateGoalBody>;
 
 @customElement('new-goal-page')
 export class NewGoalPage extends LitElement {
-  static override styles = [typescaleStyles.styleSheet!];
+  static override styles = [
+    unwrap(typescaleStyles.styleSheet),
+    css`
+      h1 {
+        text-align: center;
+      }
+    `,
+  ];
 
   #createGoal = new Task<[CreateGoalBodyType]>(this, {
     task: ([body]) =>
@@ -21,11 +29,12 @@ export class NewGoalPage extends LitElement {
       }),
   });
 
-  @query('input#goal-name')
+  @query('#goal-name')
   accessor goalName: MdFilledTextField | null = null;
 
   #submitForm(event: SubmitEvent) {
     event.preventDefault();
+    console.log(this.goalName);
     this.#createGoal.run([
       {
         name: this.goalName?.value ?? '',
