@@ -4,8 +4,8 @@ import { styles as typescaleStyles } from '@material/web/typography/md-typescale
 import { unwrap } from '../utils/unwrap.ts';
 import { GoalsController, type Goal } from './goals-controller.ts';
 
-@customElement('goals-page')
-export class GoalsPage extends LitElement {
+@customElement('goals-list')
+export class GoalsList extends LitElement {
   static override styles = [
     unwrap(typescaleStyles.styleSheet),
     css`

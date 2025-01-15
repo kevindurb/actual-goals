@@ -8,8 +8,8 @@ import {
   type CreateGoalBodyType,
 } from './goals-controller.ts';
 
-@customElement('new-goal-page')
-export class NewGoalPage extends LitElement {
+@customElement('new-goal')
+export class NewGoal extends LitElement {
   static override styles = [
     unwrap(typescaleStyles.styleSheet),
     css`

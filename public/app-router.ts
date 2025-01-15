@@ -14,13 +14,13 @@ export class AppRouter extends LitElement {
     },
     {
       path: '/goals',
-      render: () => html`<goals-page></goals-page>`,
-      enter: () => !!import('./goals/goals-page.ts'),
+      render: () => html`<goals-list></goals-list>`,
+      enter: () => !!import('./goals/goals-list.ts'),
     },
     {
       path: '/goals/new',
-      render: () => html`<new-goal-page></new-goal-page>`,
-      enter: () => !!import('./goals/new-goal-page.ts'),
+      render: () => html`<new-goal></new-goal>`,
+      enter: () => !!import('./goals/new-goal.ts'),
     },
   ]);
 
