@@ -16,8 +16,8 @@ export class GoalsPage extends LitElement {
 
       md-fab {
         position: fixed;
-        bottom: 16px;
-        right: 16px;
+        bottom: var(--md-sys-spacing-md);
+        right: var(--md-sys-spacing-md);
       }
     `,
   ];

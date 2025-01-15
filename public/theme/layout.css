@@ -1,0 +1,20 @@
+:root {
+  --md-sys-spacing-none: 0;
+  --md-sys-spacing-xxs: 2px;
+  --md-sys-spacing-xs: 4px;
+  --md-sys-spacing-sm: 8px;
+  --md-sys-spacing-md: 16px;
+  --md-sys-spacing-lg: 24px;
+  --md-sys-spacing-xl: 32px;
+
+  --md-ref-spacing-mr-xxs: var(--md-sys-spacing-xs);
+  --md-ref-spacing-ml-xxs: var(--md-sys-spacing-xs);
+  --md-ref-spacing-mr-xs: var(--md-sys-spacing-xs);
+  --md-ref-spacing-ml-xs: var(--md-sys-spacing-xs);
+  --md-ref-spacing-mr-sm: var(--md-sys-spacing-md);
+  --md-ref-spacing-ml-sm: var(--md-sys-spacing-md);
+  --md-ref-spacing-mr-md: var(--md-sys-spacing-lg);
+  --md-ref-spacing-ml-md: var(--md-sys-spacing-lg);
+  --md-ref-spacing-mr-lg: var(--md-sys-spacing-xl);
+  --md-ref-spacing-ml-lg: var(--md-sys-spacing-xl);
+}
