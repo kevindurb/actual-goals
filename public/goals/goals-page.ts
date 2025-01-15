@@ -30,7 +30,14 @@ export class GoalsPage extends LitElement {
   #renderGoalList(goals: Goal[]) {
     return goals.map(
       (goal) => html`
-        <md-list-item href=${`/goals/${goal.id}`}>${goal.name}</md-list-item>
+        <md-list-item href=${`/goals/${goal.id}`}>
+          <md-circular-progress slot="start" value="0.6"></md-circular-progress>
+          <div slot="headline">${goal.name}</div>
+          <div slot="supporting-text">
+            ${goal.type === 'ONE_TIME' ? 'One time...' : 'Monthly!'}
+          </div>
+        </md-list-item>
+        <md-divider inset></md-divider>
       `,
     );
   }
