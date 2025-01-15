@@ -3,7 +3,10 @@ import { customElement, query } from 'lit/decorators.js';
 import { styles as typescaleStyles } from '@material/web/typography/md-typescale-styles.js';
 import type { MdFilledSelect, MdFilledTextField } from '@material/web/all.js';
 import { unwrap } from '../utils/unwrap.ts';
-import { GoalsController, type CreateGoalBodyType } from './GoalsController.ts';
+import {
+  GoalsController,
+  type CreateGoalBodyType,
+} from './goals-controller.ts';
 
 @customElement('new-goal-page')
 export class NewGoalPage extends LitElement {
