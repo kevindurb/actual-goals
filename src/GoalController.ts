@@ -6,6 +6,8 @@ export const CreateGoalBody = z
   .object({
     name: z.string(),
     type: z.enum(['MONTHLY', 'ONE_TIME']),
+    amount: z.number(),
+    end: z.date().optional(),
   })
   .strict();
 
@@ -20,7 +22,7 @@ router.get('/', async (_, res) => {
 
 router.post('/', async (req, res) => {
   const body = CreateGoalBody.parse(req.body);
-  const goal = await GoalModel.create(body);
+  const goal = await GoalModel.create({ ...body, start: new Date() });
   res.status(201).send(goal.toJSON());
 });
 
