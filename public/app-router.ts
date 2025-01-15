@@ -1,10 +1,13 @@
 import { html, LitElement } from 'lit';
 import { customElement } from 'lit/decorators.js';
 import { Router } from '@lit-labs/router';
+import { provide } from '@lit/context';
+import { routerContext } from './router-context.ts';
 
 @customElement('app-router')
 export class AppRouter extends LitElement {
-  #router = new Router(this, [
+  @provide({ context: routerContext })
+  private router = new Router(this, [
     {
       path: '/',
       enter: () => {
@@ -25,6 +28,6 @@ export class AppRouter extends LitElement {
   ]);
 
   override render() {
-    return this.#router.outlet();
+    return this.router.outlet();
   }
 }

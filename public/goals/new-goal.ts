@@ -7,6 +7,10 @@ import {
   GoalsController,
   type CreateGoalBodyType,
 } from './goals-controller.ts';
+import { consume } from '@lit/context';
+import { routerContext } from '../router-context.ts';
+import type { Router } from '@lit-labs/router';
+import { TaskStatus } from '@lit/task';
 
 @customElement('new-goal')
 export class NewGoal extends LitElement {
@@ -25,34 +29,37 @@ export class NewGoal extends LitElement {
     `,
   ];
 
-  #controller = new GoalsController(this);
+  @consume({ context: routerContext })
+  private router!: Router;
+
+  private controller = new GoalsController(this);
 
   @query('form')
-  accessor $form: HTMLFormElement | null = null;
+  private $form: HTMLFormElement | null = null;
 
   @query('#name')
-  accessor $name: MdFilledTextField | null = null;
+  private $name: MdFilledTextField | null = null;
 
   @query('#type')
-  accessor $type: MdFilledSelect | null = null;
+  private $type: MdFilledSelect | null = null;
 
   @query('#amount')
-  accessor $amount: MdFilledTextField | null = null;
+  private $amount: MdFilledTextField | null = null;
 
   @query('end')
-  accessor $end: MdFilledTextField | null = null;
+  private $end: MdFilledTextField | null = null;
 
-  get typeValue() {
+  private get typeValue() {
     return this.$type?.value as CreateGoalBodyType['type'];
   }
 
-  get endValue() {
+  private get endValue() {
     return this.$end?.value ? new Date(this.$end.value) : undefined;
   }
 
-  #createGoal(event: SubmitEvent) {
+  private async createGoal(event: SubmitEvent) {
     event.preventDefault();
-    this.#controller.createTask.run([
+    await this.controller.createTask.run([
       {
         name: this.$name?.value ?? '',
         type: this.typeValue,
@@ -60,16 +67,18 @@ export class NewGoal extends LitElement {
         end: this.endValue,
       },
     ]);
+
+    this.router.goto(`/goals/${this.controller.createTask.value?.id}`);
   }
 
-  #submitForm() {
+  private submitForm() {
     this.$form?.submit();
   }
 
   override render() {
     return html`
       <h1 class="md-typescale-display-large">Create a new Goal!</h1>
-      <form @submit=${this.#createGoal}>
+      <form @submit=${this.createGoal}>
         <md-filled-text-field
           id="name"
           label="Name"
@@ -93,7 +102,7 @@ export class NewGoal extends LitElement {
           type="date"
           required
         ></md-filled-text-field>
-        <md-fab label="Save" @click=${this.#submitForm}>
+        <md-fab label="Save" @click=${this.submitForm}>
           <md-icon slot="icon">save</md-icon>
         </md-fab>
       </form>

@@ -8,5 +8,11 @@ export default {
   appIndex: './public/index.html',
   rootDir: './public',
   middleware: [proxy('/api/', { target: 'http://localhost:1337' })],
-  plugins: [esbuildPlugin({ ts: true, target: 'auto-always' })],
+  plugins: [
+    esbuildPlugin({
+      ts: true,
+      target: 'auto-always',
+      tsconfig: './tsconfig.json',
+    }),
+  ],
 };

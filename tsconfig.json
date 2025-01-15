@@ -20,6 +20,7 @@
     "strict": true,
     "target": "es2022",
     "verbatimModuleSyntax": true,
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "useDefineForClassFields": false
   }
 }
