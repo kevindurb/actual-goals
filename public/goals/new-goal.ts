@@ -1,74 +1,74 @@
-import { css, html, LitElement } from 'lit';
-import { customElement, query } from 'lit/decorators.js';
-import type { MdFilledSelect, MdFilledTextField } from '@material/web/all.js';
-import {
-  GoalsController,
-  type CreateGoalBodyType,
-} from './goals-controller.ts';
-import { consume } from '@lit/context';
-import { routerContext } from '../router-context.ts';
 import type { Router } from '@lit-labs/router';
+import { consume } from '@lit/context';
+import type { MdFilledSelect, MdFilledTextField } from '@material/web/all.js';
+import { LitElement, css, html } from 'lit';
+import { customElement, query } from 'lit/decorators.js';
+import { routerContext } from '../router-context.ts';
+import {
+	type CreateGoalBodyType,
+	GoalsController,
+} from './goals-controller.ts';
 
 @customElement('new-goal')
 export class NewGoal extends LitElement {
-  static override styles = [
-    css`
+	static override styles = [
+		css`
       md-fab {
         position: fixed;
         bottom: var(--md-sys-spacing-md);
         right: var(--md-sys-spacing-md);
       }
     `,
-  ];
+	];
 
-  @consume({ context: routerContext })
-  private router!: Router;
+	@consume({ context: routerContext })
+	private router!: Router;
 
-  private controller = new GoalsController(this);
+	private controller = new GoalsController(this);
 
-  @query('form')
-  private $form: HTMLFormElement | null = null;
+	@query('form')
+	private accessor $form: HTMLFormElement | null = null;
 
-  @query('#name')
-  private $name: MdFilledTextField | null = null;
+	@query('#name')
+	private accessor $name: MdFilledTextField | null = null;
 
-  @query('#type')
-  private $type: MdFilledSelect | null = null;
+	@query('#type')
+	private accessor $type: MdFilledSelect | null = null;
 
-  @query('#amount')
-  private $amount: MdFilledTextField | null = null;
+	@query('#amount')
+	private accessor $amount: MdFilledTextField | null = null;
 
-  @query('end')
-  private $end: MdFilledTextField | null = null;
+	@query('end')
+	private accessor $end: MdFilledTextField | null = null;
 
-  private get typeValue() {
-    return this.$type?.value as CreateGoalBodyType['type'];
-  }
+	private get typeValue() {
+		return this.$type?.value as CreateGoalBodyType['type'];
+	}
 
-  private get endValue() {
-    return this.$end?.value ? new Date(this.$end.value) : undefined;
-  }
+	private get endValue() {
+		return this.$end?.value ? new Date(this.$end.value) : undefined;
+	}
 
-  private async createGoal(event: SubmitEvent) {
-    event.preventDefault();
-    await this.controller.createTask.run([
-      {
-        name: this.$name?.value ?? '',
-        type: this.typeValue,
-        amount: this.$amount?.valueAsNumber ?? 0,
-        end: this.endValue,
-      },
-    ]);
+	private async createGoal(event: SubmitEvent) {
+		event.preventDefault();
+		await this.controller.createTask.run([
+			{
+				name: this.$name?.value ?? '',
+				type: this.typeValue,
+				amount: this.$amount?.valueAsNumber ?? 0,
+				end: this.endValue,
+			},
+		]);
 
-    this.router.goto(`/goals/${this.controller.createTask.value?.id}`);
-  }
+		this.router.goto(`/goals/${this.controller.createTask.value?.id}`);
+	}
 
-  private submitForm() {
-    this.$form?.submit();
-  }
+	private submitForm() {
+		this.$form?.submit();
+	}
 
-  override render() {
-    return html`
+	override render() {
+		return html`
       <ag-header center>Create a new Goal!</ag-header>
       <form @submit=${this.createGoal}>
         <md-filled-text-field
@@ -98,5 +98,5 @@ export class NewGoal extends LitElement {
         </md-fab>
       </form>
     `;
-  }
+	}
 }

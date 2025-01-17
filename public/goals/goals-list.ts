@@ -25,7 +25,7 @@ export class GoalsList extends LitElement {
 	private renderGoalList(goals: Goal[]) {
 		return goals.map(
 			(goal) => html`
-        <md-list-item @click=${() => this.router.goto(`/goals/${goal.id}`)}</md-list-item>>
+        <md-list-item @click=${() => this.router.goto(`/goals/${goal.id}`)}>
           <md-circular-progress slot="start" value="0.6"></md-circular-progress>
           <div slot="headline">${goal.name}</div>
           <div slot="supporting-text">
