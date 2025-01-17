@@ -26,7 +26,7 @@ export class NewGoal extends LitElement {
 
 	private controller = new GoalsController(this);
 
-	@query('form')
+	@query('#form')
 	private accessor $form: HTMLFormElement | null = null;
 
 	@query('#name')
@@ -60,17 +60,17 @@ export class NewGoal extends LitElement {
 			},
 		]);
 
-		this.router.goto(`/goals/${this.controller.createTask.value?.id}`);
+		this.router.goto('/goals');
 	}
 
 	private submitForm() {
-		this.$form?.submit();
+		this.$form?.requestSubmit();
 	}
 
 	override render() {
 		return html`
       <ag-header center>Create a new Goal!</ag-header>
-      <form @submit=${this.createGoal}>
+      <form id="form" @submit=${this.createGoal}>
         <md-filled-text-field
           id="name"
           label="Name"
